@@ -240,12 +240,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 margin: 0 auto;
             `;
             form.insertAdjacentElement('afterend', statusMessage);
-            
-            const request = new XMLHttpRequest();
-            request.open('POST', 'server.php');
-            // Заголовок для работы с JSON
-            request.setRequestHeader('Content-type', 'application/json');
-            // Работа с FormData - помогает 
+            // Создаём formData и при помощи неё собираем все данные с нашей формы 
             const formData = new FormData(form);
             // Работа с JSON, но можно обойтись и без него, зависит от backend-разработчика
             // Перевод специфического объекта FormData в JSON
@@ -256,19 +251,29 @@ window.addEventListener('DOMContentLoaded', () => {
             });
             // Через метод stringify превратим объект в формат JSON и отправим на сервер
             const json = JSON.stringify(object);
-            request.send(json);
-
-            // request.send(formData);
-
-            request.addEventListener('load', () => {
-                if (request.status === 200) {
-                    console.log(request.response);
-                    showThanksModal(message.success);
-                    form.reset();
-                    statusMessage.remove();
-                } else {
-                    showThanksModal(message.failure);
-                }
+            
+            // Отправляем данные с formData на сервер
+            // и обрабатываем наш запрос с помощью Промисов
+            fetch('server1.php', {
+                method: 'POST',
+                // При работе с formData НЕ прописываем заголовки headers
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                // Работа с formData
+                // body: formData
+                // Работа с JSON
+                body: json
+            })
+            .then((data) => data.text())
+            .then((data) => {
+                console.log(data);
+                showThanksModal(message.success);
+                statusMessage.remove();
+            }).catch(() => {
+                showThanksModal(message.failure);
+            }).finally(() => {
+                form.reset();
             });
         });
     }
