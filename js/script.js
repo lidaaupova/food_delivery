@@ -254,7 +254,7 @@ window.addEventListener('DOMContentLoaded', () => {
             
             // Отправляем данные с formData на сервер
             // и обрабатываем наш запрос с помощью Промисов
-            fetch('server1.php', {
+            fetch('server.php', {
                 method: 'POST',
                 // При работе с formData НЕ прописываем заголовки headers
                 headers: {
@@ -302,4 +302,8 @@ window.addEventListener('DOMContentLoaded', () => {
             closeModal();
         }, 4000);
     }
+
+    fetch('http://localhost:3000/menu')
+        .then(data => data.json())
+        .then(res => console.log(res));
 });
