@@ -226,10 +226,23 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     forms.forEach(item => {
-        postData(item);
+        bindPostData(item);
     });
+    // Функция постинга данных
+    const postData = async (url, data) => {
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: data
+        });
 
-    function postData (form) {
+        return await res.json();
+    };
+
+    // Функция привязки постинга данных
+    function bindPostData (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
@@ -244,28 +257,29 @@ window.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(form);
             // Работа с JSON, но можно обойтись и без него, зависит от backend-разработчика
             // Перевод специфического объекта FormData в JSON
-            // Создадим новый объект и поместим в него данные с FormData с помощью метода перебора forEach
-            const object = {};
-            formData.forEach(function(value, key) {
-                object[key] = value;
-            });
+            const json = JSON.stringify(Object.fromEntries(formData.entries()));
+            // ИЛИ создадим новый объект и поместим в него данные с FormData с помощью метода перебора forEach
+            // const object = {};
+            // formData.forEach(function(value, key) {
+            //     object[key] = value;
+            // });
             // Через метод stringify превратим объект в формат JSON и отправим на сервер
-            const json = JSON.stringify(object);
+            // const json = JSON.stringify(object);
             
             // Отправляем данные с formData на сервер
             // и обрабатываем наш запрос с помощью Промисов
-            fetch('server.php', {
-                method: 'POST',
-                // При работе с formData НЕ прописываем заголовки headers
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                // Работа с formData
-                // body: formData
-                // Работа с JSON
-                body: json
-            })
-            .then((data) => data.text())
+            // fetch('server.php', {
+            //     method: 'POST',
+            //     // При работе с formData НЕ прописываем заголовки headers
+            //     headers: {
+            //         'Content-type': 'application/json'
+            //     },
+            //     // Работа с formData
+            //     // body: formData
+            //     // Работа с JSON
+            //     body: json
+            // });
+            postData('http://localhost:3000/requests', json)
             .then((data) => {
                 console.log(data);
                 showThanksModal(message.success);
