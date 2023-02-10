@@ -380,6 +380,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // Slider #2 Более сложный
 
     const slides = document.querySelectorAll('.offer__slide'),
+          slider = document.querySelector('.offer__slider'), // нужен для создания динамических точек слайдера
           prev = document.querySelector('.offer__slider-prev'),
           next = document.querySelector('.offer__slider-next'),
           total = document.querySelector('#total'),
@@ -414,6 +415,31 @@ window.addEventListener('DOMContentLoaded', () => {
         slide.style.width = width;
     });
 
+    // Создание динамических точек для слайдера
+    
+    slider.style.position = 'relative';
+
+    // Создаём большую обёртку для всех точек
+    const indicators = document.createElement('ol'),
+          dots =[];
+
+    indicators.classList.add('carousel-indicators');
+    slider.append(indicators);
+
+    // Создаём определённое кол-во точек на основе кол-ва слайдов
+    for (let i = 0; i < slides.length; i++) {
+        const dot = document.createElement('li');
+        dot.setAttribute('data-slide-to', i + 1);
+        dot.classList.add('dot');
+        // Устанавливаем активную точку
+        if (i == 0) {
+            dot.style.opacity = 1;
+        }
+        indicators.append(dot);
+        dots.push(dot);
+    }
+
+
     // Навешиваем обработчики события клика и создаём функционал для передвижения слайдов
     next.addEventListener('click', () => {
         // Проверяем, что это конечный слайд или нет
@@ -438,6 +464,10 @@ window.addEventListener('DOMContentLoaded', () => {
         } else {
             current.textContent = slideIndex;
         }
+
+        // Прописываем взаимодействие точек с переключением слайдов
+        dots.forEach(dot => dot.style.opacity = '.5');
+        dots[slideIndex - 1].style.opacity = 1;
     });
 
     prev.addEventListener('click', () => {
@@ -461,8 +491,32 @@ window.addEventListener('DOMContentLoaded', () => {
         } else {
             current.textContent = slideIndex;
         }
+
+        // Прописываем взаимодействие точек с переключением слайдов
+        dots.forEach(dot => dot.style.opacity = '.5');
+        dots[slideIndex - 1].style.opacity = 1;
     });
 
+    //Добавляем функциональность к точкам
+    dots.forEach(dot => {
+        dot.addEventListener('click', (e) => {
+            // Получаем data-атрибут точек
+            const slideTo = e.target.getAttribute('data-slide-to');
 
+            slideIndex = slideTo;
+            offset = +width.slice(0, width.length - 2) * (slideTo - 1);
+            //Перемещаем слайды
+            slidesField.style.transform =`translateX(-${offset}px)`;
+
+            if (slides.length < 10) {
+                current.textContent = `0${slideIndex}`;
+            } else {
+                current.textContent = slideIndex;
+            }
+
+            dots.forEach(dot => dot.style.opacity = '.5');
+            dots[slideIndex - 1].style.opacity = 1;
+        });
+    });
     
 });
