@@ -1,70 +1,14 @@
-function slider () {
-    // Slider #1 Более лёгкий
-
-    // const slides = document.querySelectorAll('.offer__slide'),
-    //       prev = document.querySelector('.offer__slider-prev'),
-    //       next = document.querySelector('.offer__slider-next'),
-    //       total = document.querySelector('#total'),
-    //       current = document.querySelector('#current');
-    // let slideIndex = 1;
-
-    // showSlides(slideIndex);
-
-    // // Отображаем общее количество слайдов
-    // if (slides.length < 10) {
-    //     total.textContent = `0${slides.length}`;
-    // } else {
-    //     total.textContent = slides.length;
-    // }
-
-    // function showSlides(n) {
-    //     // Устанавливаем граничные значение по перемещению слайдов
-    //     if (n > slides.length) {
-    //         slideIndex = 1;
-    //     }
-
-    //     if (n < 1) {
-    //         slideIndex = slides.length;
-    //     }
-
-    //     // Скрываем все слайды и показываем только нужный
-    //     slides.forEach( item => item.style.display = 'none');
-        
-    //     slides[slideIndex - 1].style.display = 'block';
-
-    //     // Отображаем текущий слайд
-    //     if (slideIndex < 10) {
-    //         current.textContent = `0${slideIndex}`;
-    //     } else {
-    //         current.textContent = slideIndex;
-    //     }
-    // }
-
-    // // Функция для изменения slideIndex
-    // function plusSlides(n) {
-    //     showSlides(slideIndex += n);
-    // }
-
-    // // Добавляем обработчики событий клика на стрелки
-    // prev.addEventListener('click', () => {
-    //     plusSlides(-1);
-    // });
-
-    // next.addEventListener('click', () => {
-    //     plusSlides(1);
-    // });
-
-
+function slider ({container, slide, nextArrow, prevArrow, totalCounter, currentCounter, wrapper, field}) {
     // Slider #2 Более сложный
 
-    const slides = document.querySelectorAll('.offer__slide'),
-          slider = document.querySelector('.offer__slider'), // нужен для создания динамических точек слайдера
-          prev = document.querySelector('.offer__slider-prev'),
-          next = document.querySelector('.offer__slider-next'),
-          total = document.querySelector('#total'),
-          current = document.querySelector('#current'),
-          slidesWrapper = document.querySelector(".offer__slider-wrapper"),
-          slidesField = document.querySelector('.offer__slider-inner'),
+    const slides = document.querySelectorAll(slide),
+          slider = document.querySelector(container), // нужен для создания динамических точек слайдера
+          prev = document.querySelector(prevArrow),
+          next = document.querySelector(nextArrow),
+          total = document.querySelector(totalCounter),
+          current = document.querySelector(currentCounter),
+          slidesWrapper = document.querySelector(wrapper),
+          slidesField = document.querySelector(field),
           width = window.getComputedStyle(slidesWrapper).width;
     
     let slideIndex = 1;
@@ -209,6 +153,62 @@ function slider () {
             activeDot(dots, slideIndex);
         });
     });
+
+
+        // Slider #1 Более лёгкий
+
+    // const slides = document.querySelectorAll('.offer__slide'),
+    //       prev = document.querySelector('.offer__slider-prev'),
+    //       next = document.querySelector('.offer__slider-next'),
+    //       total = document.querySelector('#total'),
+    //       current = document.querySelector('#current');
+    // let slideIndex = 1;
+
+    // showSlides(slideIndex);
+
+    // // Отображаем общее количество слайдов
+    // if (slides.length < 10) {
+    //     total.textContent = `0${slides.length}`;
+    // } else {
+    //     total.textContent = slides.length;
+    // }
+
+    // function showSlides(n) {
+    //     // Устанавливаем граничные значение по перемещению слайдов
+    //     if (n > slides.length) {
+    //         slideIndex = 1;
+    //     }
+
+    //     if (n < 1) {
+    //         slideIndex = slides.length;
+    //     }
+
+    //     // Скрываем все слайды и показываем только нужный
+    //     slides.forEach( item => item.style.display = 'none');
+        
+    //     slides[slideIndex - 1].style.display = 'block';
+
+    //     // Отображаем текущий слайд
+    //     if (slideIndex < 10) {
+    //         current.textContent = `0${slideIndex}`;
+    //     } else {
+    //         current.textContent = slideIndex;
+    //     }
+    // }
+
+    // // Функция для изменения slideIndex
+    // function plusSlides(n) {
+    //     showSlides(slideIndex += n);
+    // }
+
+    // // Добавляем обработчики событий клика на стрелки
+    // prev.addEventListener('click', () => {
+    //     plusSlides(-1);
+    // });
+
+    // next.addEventListener('click', () => {
+    //     plusSlides(1);
+    // });
 }
 
-module.exports = slider;
+export default slider;

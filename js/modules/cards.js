@@ -1,3 +1,5 @@
+import { getResource } from "../services/services";
+
 function cards() {
     // Используем Классы для карточек
     class MenuCard {
@@ -40,34 +42,21 @@ function cards() {
         }
     }
 
-    // Функция для получения данных по карточкам с сервера
-    const getResource = async (url) => {
-        const res = await fetch(url);
+    // getResource();
 
-        // Обрабатываем проблемы у промисов с ошибками в http-запросах
-        // Свойство .ok говорит при получении данных, что всё ок или не ок
-        // Свойство status показывает тот статус, который вернул нам сервер
-        if(!res.ok) {
-            // Создаём ошибку вручную
-            throw new Error(`Could not fetch ${url}, status: ${res.status}`); //throw выкидывает нашу ошибку из функции
-        }
-
-        return await res.json();
-    };
-
-    // getResource('http://localhost:3000/menu')
-    //     .then(data => {
-    //         data.forEach(({img, altimg, title, descr, price}) => {
-    //             new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
-    //         });
-    //     });
-
-    axios.get('http://localhost:3000/menu')
+    getResource('http://localhost:3000/menu')
         .then(data => {
-            data.data.forEach(({img, altimg, title, descr, price}) => {
+            data.forEach(({img, altimg, title, descr, price}) => {
                 new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
             });
         });
+
+    // axios.get('http://localhost:3000/menu')
+    //     .then(data => {
+    //         data.data.forEach(({img, altimg, title, descr, price}) => {
+    //             new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
+    //         });
+    //     });
 }
 
-module.exports = cards;
+export default cards;
