@@ -16,9 +16,20 @@
     "url": "https://github.com/lidaaupova/food_delivery/issues"
   },
   "homepage": "https://github.com/lidaaupova/food_delivery#readme",
+  "browserslist": [
+    ">0.5%"
+  ],
   "devDependencies": {
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.0",
+    "@babel/preset-env": "^7.20.2",
+    "babel-loader": "^9.1.2",
+    "core-js": "^3.28.0",
     "json-server": "^0.17.1",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.12.1"
   }
 }
